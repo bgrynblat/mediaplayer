@@ -1,0 +1,98 @@
+body {
+//	background-color: black;
+	font-family: "Verdana";
+	margin: 0;
+}
+
+.header {
+	text-align: center;
+	background-color: #2B825E;
+	font-weight: bold;
+	color: white;
+	padding: 15px 0;
+	font-size: 30px;
+}
+
+.section {
+	margin-bottom: 10px;
+}
+
+.section h2 {
+	background-color: #39C48A;
+	padding: 10px;
+	margin: 0;
+}
+
+.section .content {
+	padding: 10px;
+}
+
+a {
+	color: grey;
+	text-decoration: none;
+}
+
+a.delete {
+	float: right;
+	color: #FC6D6D;
+}
+
+
+/* Files available */
+.file {
+	padding: 5px 10px 5px 10px;
+}
+
+.file:hover {
+	background-color: #dddddd;
+}
+
+.file a.play {
+	color: #7CC284;
+	float: right;
+        margin-right: 20px;
+}
+
+.file a.download {
+        color: #6CA7BA;
+        float: right;
+        margin-right: 25px;
+}
+
+/* Current job */
+.current_job {
+	padding: 10px;
+}
+
+.current_job:hover {
+	background-color: #dddddd;
+}
+.current_job a.pause {
+	float: right;
+	color: #BFBC50;
+}
+
+.progress-bar {
+	border: 1px solid;
+	border-color: #2B825E;
+	margin-top: 5px;
+}
+
+/* Paused job */
+.paused_job {
+	padding: 5px 10px 5px 10px;
+}
+
+.paused_job:hover {
+	background-color: #dddddd;
+}
+
+.paused_job a.start {
+	float: right;
+	margin-right: 20px;
+	color: #7CC284;
+}
+
+.paused_job a.delete {
+	float: right;
+}
