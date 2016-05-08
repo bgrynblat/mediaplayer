@@ -1,11 +1,13 @@
 <?php
 	include('config.php');
 	
-	$furl = $_ENV["DL_FOLDER"]."/".$_GET['file'];
+	//$furl = $_ENV["DL_FOLDER"]."/".$_GET['file'];
+	$furl = $_GET['file'];
 
 	$srv = $_SERVER["HTTP_HOST"];
         $req = $_SERVER['REQUEST_URI'];
 
+	$req = substr($req, 0, strpos($req, "?"));
 	$rev = strrev($req);
 	$pos = strpos($rev, "/");
 	$tmp = substr($rev, $pos);

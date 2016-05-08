@@ -13,4 +13,6 @@ sudo ln -s . /var/www/html/media
 
 MEDIA_FOLDER=/home/bgr/dl
 ln -s $MEDIA_FOLDER medias
-sudo chown 777 medias
+sudo chmod 777 medias
+
+sudo chmod 777 scripts

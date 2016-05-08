@@ -19,10 +19,10 @@
 	$files = getFiles();
 	foreach ($files as $result) {
 		echo "<div class='file'>";
-		echo $result;
-		echo "<a class='delete' href='delete_file.php?file=".$result."'><i class='fa fa-remove'>DELETE</i></a>";
-    		echo "<a class='play' href='videoplayer.php?file=".$result."'><i class='fa fa-play'>PLAY</i></a>"; 
-    		echo "<a class='download' download target='_blank' href='download.php?file=".$result."&mode=1'><i class='fa fa-cloud-download'>DOWNLOAD</i></a>"; 
+		echo $result[2];
+		echo "<a class='delete' href='delete_file.php?file=".$result[0]."'><i class='fa fa-remove'>DELETE</i></a>";
+    		echo "<a class='play' href='videoplayer.php?file=".$result[0]."'><i class='fa fa-play'>PLAY</i></a>"; 
+    		echo "<a class='download' download target='_blank' href='download.php?file=".$result[0]."&mode=1'><i class='fa fa-cloud-download'>DOWNLOAD</i></a>"; 
     		echo "</div>";
 	} 
 ?>
@@ -33,55 +33,30 @@
 <h2>CURRENT JOBS</h2>
 <div class='content'>
 <?php
-	/*
-	$j = getCurrentJobs();
-	$jobs=$j[0];
-	$jobs_percent=$j[1];
+	// ID Done Have ETA Up Down Ratio Status Name
+	//1 51% 211.8 MB Unknown 0.0 0.0 0.0 Stopped The.Walking.Dead.S06E08.HDTV.x264-KILLERS[eztv].mp4
+	$jobs = checkJobs();
+	//$jobs=$j[0];
+	//$jobs_percent=$j[1];
 	if(empty($jobs)) {
 		echo "No jobs running !";
 	} else {
-		for($i=0; $i<count($jobs); $i++) {
+		for($i=1; $i<count($jobs); $i++) {
 			$job = $jobs[$i];
-			$pos = strpos($job, " ");
-			$pid = substr($job, 0, $pos);
-			$cmd = substr($job, $pos);
-			$file = explode(" ", $cmd);			
+			$array = explode(" ", $job);
+	
+			$id = $array[0];
+			$pcent = $array[1];
+			$status = $array[8];
+			$torrent = $array[count($array)-1];
 
 			echo "<div class='current_job'>";
-			echo $file[4]." (".$pid." | ".$jobs_percent[$i]."%)";
-			echo "<a class='pause' href='stop_job.php?job=".$pid."'><i class='fa fa-pause'></i></a>";
-			echo "<div class='progress-bar' style='width: ".$jobs_percent[$i]."%'></div>";
-    			echo "</div>";
+                        echo $torrent." (".$id." | ".$pcent.")";
+                        echo "<a class='pause' href='stop_job.php?job=".$id."'><i class='fa fa-pause'></i></a>";
+                        echo "<div class='progress-bar' style='width: ".$pcent."'></div>";
+                        echo "</div>";
 		}
 	}
-	*/
-?>
-</div>
-</div>
-
-<div class="section">
-<h2>PAUSED JOBS</h2>
-<div class='content'>
-<?php
-	/*
-	$l = getPausedDownloads($jobs);
-	$logs=$l[0];
-	$logs_percent=$l[1];
-	if(empty($logs)) {
-                echo "No paused jobs !";
-        } else {
-		for($i=0; $i<count($logs); $i++) {
-			$result = $logs[$i];
-			echo "<div class='paused_job'>";
-    			echo $result; 
-			echo " (".$logs_percent[$i]."%)";
-			echo "<a class='delete' href='delete_job.php?job=".$result."'><i class='fa fa-remove'></i></a>";
-			echo "<a class='start' href='start_job.php?torrent=".$result."'><i class='fa fa-play'></i></a>";
-			echo "<div class='progress-bar' style='width: ".$logs_percent[$i]."%'></div>";
-    			echo "</div>";
-		}
-	}
-	*/
 ?>
 </div>
 </div>
@@ -103,9 +78,9 @@
 </div>
 
 <div class="section">
-<h2>START A JOB</h2>
+<h2>IMPORT TORRENT</h2>
 <div class='content'>
-<form action="start_job.php" method="get">
+<form action="import_torrent.php" method="get">
 	<label for="torrent">Torrent URL :</label>
 	<input id="torrent" name="torrent" type="text"></input>
 	<input type="submit" value="Start"></input>
