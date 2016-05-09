@@ -8,8 +8,10 @@ mkdir tmps && chmod 777 tmps
 
 sudo ln -s `pwd` /var/www/html/media
 
-MEDIA_FOLDER=/home/bgr/dl
-ln -s $MEDIA_FOLDER medias
+MEDIA_FOLDER=/var/lib/transmission-daemon/downloads/
+ln -s $MEDIA_FOLDER medias/transmission-dl
+
+
 sudo chmod 777 medias
 
 sudo chmod 777 scripts
