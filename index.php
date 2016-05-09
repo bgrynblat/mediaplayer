@@ -52,7 +52,7 @@
 
 			echo "<div class='current_job'>";
                         echo $torrent." (".$id." | ".$pcent.")";
-                        echo "<a class='pause' href='stop_job.php?job=".$id."'><i class='fa fa-pause'></i></a>";
+                        echo "<a class='pause' href='stop_torrent.php?job=".$id."'><i class='fa fa-pause'>PAUSE</i></a>";
                         echo "<div class='progress-bar' style='width: ".$pcent."'></div>";
                         echo "</div>";
 		}
