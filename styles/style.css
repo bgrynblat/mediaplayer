@@ -37,6 +37,11 @@ a.delete {
 	color: #FC6D6D;
 }
 
+a.play {
+	color: #7CC284;
+	float: right;
+        margin-right: 20px;
+}
 
 /* Files available */
 .file {
@@ -47,11 +52,6 @@ a.delete {
 	background-color: #dddddd;
 }
 
-.file a.play {
-	color: #7CC284;
-	float: right;
-        margin-right: 20px;
-}
 
 .file a.download {
         color: #6CA7BA;

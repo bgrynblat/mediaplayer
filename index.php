@@ -34,7 +34,7 @@
 <div class='content'>
 <?php
 	// ID Done Have ETA Up Down Ratio Status Name
-	//1 51% 211.8 MB Unknown 0.0 0.0 0.0 Stopped The.Walking.Dead.S06E08.HDTV.x264-KILLERS[eztv].mp4
+	//1;51%;211.8 MB;Unknown;0.0;0.0;0.0;Stopped;The.Walking.Dead.S06E08.HDTV.x264-KILLERS[eztv].mp4
 	$jobs = checkJobs();
 	//$jobs=$j[0];
 	//$jobs_percent=$j[1];
@@ -43,16 +43,19 @@
 	} else {
 		for($i=1; $i<count($jobs); $i++) {
 			$job = $jobs[$i];
-			$array = explode(" ", $job);
+			$array = explode(";", $job);
 	
 			$id = $array[0];
 			$pcent = $array[1];
-			$status = $array[8];
+			$status = $array[7];
 			$torrent = $array[count($array)-1];
 
 			echo "<div class='current_job'>";
-                        echo $torrent." (".$id." | ".$pcent.")";
-                        echo "<a class='pause' href='stop_torrent.php?job=".$id."'><i class='fa fa-pause'>PAUSE</i></a>";
+                        echo "$torrent ($id | $pcent), $status";
+			if(strcmp($status, "Stopped") == 0)
+                        	echo "<a class='play' href='start_torrent.php?id=".$id."'><i class='fa fa-play'>RESUME</i></a>";
+			else
+				echo "<a class='pause' href='stop_torrent.php?id=".$id."'><i class='fa fa-pause'>PAUSE</i></a>";
                         echo "<div class='progress-bar' style='width: ".$pcent."'></div>";
                         echo "</div>";
 		}

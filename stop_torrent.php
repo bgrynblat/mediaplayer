@@ -2,6 +2,7 @@
 	if(!isset($_GET['id']))
 		exit();
 
-	exec("scripts/pause_torrent.sh $_GET['id']");
+	$id = $_GET['id'];
+	echo exec("/usr/bin/transmission-remote -n 'transmission:transmission' -t $id -S");
 
 ?>
