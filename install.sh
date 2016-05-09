@@ -16,4 +16,5 @@ sudo ln -s `pwd` /var/www/html/$APP_NAME
 MEDIA_FOLDER=/var/lib/transmission-daemon/downloads/
 ln -s $MEDIA_FOLDER medias/transmission-dl
 
-
+sudo cp nginx.conf.default /etc/nginx/sites-available/default
+sudo service nginx reload

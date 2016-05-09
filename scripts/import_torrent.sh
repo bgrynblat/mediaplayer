@@ -9,7 +9,7 @@ FILE=`echo $1 | rev | cut -d"/" -f1 | rev`
 PREFIX="torrents/"
 PATH="$PREFIX$FILE"
 
-echo $PATH
+#echo "$FILE" | /bin/sed -r 's/[ \[\]\(\)]+/\\ /g'
 
-/usr/bin/wget -P $PREFIX $1
-/usr/bin/transmission-remote -n 'transmission:transmission' -a $PATH
+/usr/bin/wget -P $PREFIX "$1"
+/usr/bin/transmission-remote -n 'transmission:transmission' -a "$PATH"

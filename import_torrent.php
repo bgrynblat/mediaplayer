@@ -1,4 +1,6 @@
 <?php
 	$url = $_GET["torrent"];
-	exec("scripts/import_torrent.sh $url");
+	echo exec("scripts/import_torrent.sh '$url'");
 ?>
+<br/>
+<a href=".">Back</a>

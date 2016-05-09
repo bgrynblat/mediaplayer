@@ -37,6 +37,7 @@ if ($handle) {
 } 
 
 ?>
-
+<br />
+<a href=".">Back</a>
 </body>
 </html>

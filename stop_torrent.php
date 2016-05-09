@@ -6,3 +6,5 @@
 	echo exec("/usr/bin/transmission-remote -n 'transmission:transmission' -t $id -S");
 
 ?>
+<br />
+<a href=".">Back</a>
