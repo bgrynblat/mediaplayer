@@ -13,6 +13,11 @@ body {
 	font-size: 30px;
 }
 
+.player {
+	background-color: black;
+}
+
+/* main page */
 .section {
 	margin-bottom: 10px;
 }

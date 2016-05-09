@@ -38,7 +38,7 @@
 	$jobs = checkJobs();
 	//$jobs=$j[0];
 	//$jobs_percent=$j[1];
-	if(empty($jobs)) {
+	if(count($jobs) <= 1) {
 		echo "No jobs running !";
 	} else {
 		for($i=1; $i<count($jobs); $i++) {
@@ -46,6 +46,7 @@
 			$array = explode(";", $job);
 	
 			$id = $array[0];
+			$id = str_replace("*", "", $id);
 			$pcent = $array[1];
 			$up = $array[4];
 			$down = $array[5];
@@ -84,24 +85,24 @@
 </div>
 
 <div class="section">
-<h2>IMPORT TORRENT</h2>
+<h2>SEARCH TORRENT</h2>
 <div class='content'>
-<form action="import_torrent.php" method="get">
-	<label for="torrent">Torrent URL :</label>
-	<input id="torrent" name="torrent" type="text"></input>
-	<input type="submit" value="Start"></input>
-
+<form action="search_torrent.php" method="get">
+        <label for="search">Torrent name :</label>
+        <input id="search" name="search" type="text"></input>
+        <input type="submit" value="Search"></input>
 </form>
 </div>
 </div>
 
 <div class="section">
-<h2>SEARCH TORRENT</h2>
+<h2>IMPORT TORRENT</h2>
 <div class='content'>
-<form action="search_torrent.php" method="get">
-        <label for="search">Torrent URL :</label>
-        <input id="search" name="search" type="text"></input>
-        <input type="submit" value="Search"></input>
+<form action="import_torrent.php" method="get">
+        <label for="torrent">Torrent URL :</label>
+        <input id="torrent" name="torrent" type="text"></input>
+        <input type="submit" value="Start"></input>
+
 </form>
 </div>
 </div>

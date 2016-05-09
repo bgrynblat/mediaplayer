@@ -8,26 +8,34 @@
 	
 	$url = "download.php?file=".$video;
 	$url_dl = $url."&mode=1";
+
+	$tmp = explode("/", $video);
+	$name = $tmp[count($tmp)-1];
 ?>
 
 <html data-cast-api-enabled="true">
   <head>
-    <title>Demo - VideoJS Chromecast Plugin</title>
+    <title>
+	Media Player - Playing <?php echo $name;?>
+	</title>
 
     <!-- stylesheets -->
     <link href="styles/video-js.css" rel="stylesheet" type="text/css">
     <link href="styles/videojs.chromecast.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
+        <link rel="stylesheet" type="text/css" href="styles/font-awesome.css">
 
     <!-- javascripts -->
     <script src="http://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
     <script src="js/video.dev.js"></script>
     <script src="js/videojs.chromecast.js"></script>
+
   </head>
-  <body>
-    <video id="demo_player" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360"
-        poster="http://video-js.zencoder.com/oceans-clip.png"
-        data-setup="{}">
+  <body class="player">
+	<div class="header"><?php echo $name;?></div>
+
+    <video id="demo_player" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="480" data-setup="{}">
       	<?php
 		echo "<source src='".$url."' type='video/mp4'>";
 	?>
@@ -42,8 +50,8 @@
           chromecast: {
             appId: undefined,
             metadata: {
-              title: "Title",
-              subtitle: "Subtitle"
+              title: "<?php echo $name;?>",
+              //subtitle: "Subtitle"
             }
           }
         }
