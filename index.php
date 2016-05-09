@@ -6,7 +6,7 @@
 <head>
 	<title>Media player</title>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">-->
+	<link rel="stylesheet" type="text/css" href="styles/font-awesome.css">
 </head>
 <body>
 
@@ -20,9 +20,9 @@
 	foreach ($files as $result) {
 		echo "<div class='file'>";
 		echo $result[2];
-		echo "<a class='delete' href='delete_file.php?file=".$result[0]."'><i class='fa fa-remove'>DELETE</i></a>";
-    		echo "<a class='play' href='videoplayer.php?file=".$result[0]."'><i class='fa fa-play'>PLAY</i></a>"; 
-    		echo "<a class='download' download target='_blank' href='download.php?file=".$result[0]."&mode=1'><i class='fa fa-cloud-download'>DOWNLOAD</i></a>"; 
+		echo "<a class='delete' href='delete_file.php?file=".$result[0]."'><i class='fa fa-remove'></i></a>";
+    		echo "<a class='play' href='videoplayer.php?file=".$result[0]."'><i class='fa fa-play'></i></a>"; 
+    		echo "<a class='download' download target='_blank' href='download.php?file=".$result[0]."&mode=1'><i class='fa fa-cloud-download'></i></a>"; 
     		echo "</div>";
 	} 
 ?>
@@ -47,15 +47,17 @@
 	
 			$id = $array[0];
 			$pcent = $array[1];
+			$up = $array[4];
+			$down = $array[5];
 			$status = $array[7];
 			$torrent = $array[count($array)-1];
 
 			echo "<div class='current_job'>";
-                        echo "$torrent ($id | $pcent), $status";
+                        echo "$torrent ($pcent | <i class='fa fa-arrow-down'></i> $down kb/s | <i class='fa fa-arrow-up'></i> $up kb/s | $status)";
 			if(strcmp($status, "Stopped") == 0)
-                        	echo "<a class='play' href='start_torrent.php?id=".$id."'><i class='fa fa-play'>RESUME</i></a>";
+                        	echo "<a class='play' href='start_torrent.php?id=".$id."'><i class='fa fa-play'></i></a>";
 			else
-				echo "<a class='pause' href='stop_torrent.php?id=".$id."'><i class='fa fa-pause'>PAUSE</i></a>";
+				echo "<a class='pause' href='stop_torrent.php?id=".$id."'><i class='fa fa-pause'></i></a>";
                         echo "<div class='progress-bar' style='width: ".$pcent."'></div>";
                         echo "</div>";
 		}
@@ -88,6 +90,17 @@
 	<input id="torrent" name="torrent" type="text"></input>
 	<input type="submit" value="Start"></input>
 
+</form>
+</div>
+</div>
+
+<div class="section">
+<h2>SEARCH TORRENT</h2>
+<div class='content'>
+<form action="search_torrent.php" method="get">
+        <label for="search">Torrent URL :</label>
+        <input id="search" name="search" type="text"></input>
+        <input type="submit" value="Search"></input>
 </form>
 </div>
 </div>
