@@ -54,6 +54,7 @@
 
 			echo "<div class='current_job'>";
                         echo "$torrent ($pcent | <i class='fa fa-arrow-down'></i> $down kb/s | <i class='fa fa-arrow-up'></i> $up kb/s | $status)";
+			echo "<a class='delete' href='remove_torrent.php?id=".$id."'><i class='fa fa-remove'></i></a>";
 			if(strcmp($status, "Stopped") == 0)
                         	echo "<a class='play' href='start_torrent.php?id=".$id."'><i class='fa fa-play'></i></a>";
 			else
