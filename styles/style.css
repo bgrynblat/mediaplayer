@@ -28,6 +28,12 @@ body {
 	margin: 0;
 }
 
+.section h2 a {
+	float: right;
+	margin-right: 20px;
+	color: black;
+}
+
 .section .content {
 	padding: 10px;
 }

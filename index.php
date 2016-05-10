@@ -7,26 +7,17 @@
 	<title>Media player</title>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="stylesheet" type="text/css" href="styles/font-awesome.css">
+
+    	<script src="js/jquery-2.2.3.min.js"></script>
+    	<script src="js/functions.js"></script>
 </head>
-<body>
+<body onload="updateFiles()">
 
 <div class="header">HELLO BEN !</div>
 
-<div class="section">
-<h2>FILES</h2>
-<div class='content'>
-<?php
-	$files = getFiles();
-	foreach ($files as $result) {
-		echo "<div class='file'>";
-		echo $result[2];
-		echo "<a class='delete' href='delete_file.php?file=".$result[0]."'><i class='fa fa-remove'></i></a>";
-    		echo "<a class='play' href='videoplayer.php?file=".$result[0]."'><i class='fa fa-play'></i></a>"; 
-    		echo "<a class='download' download target='_blank' href='download.php?file=".$result[0]."&mode=1'><i class='fa fa-cloud-download'></i></a>"; 
-    		echo "</div>";
-	} 
-?>
-</div>
+<div class="section" id="files">
+	<h2>FILES <a onclick="updateFiles()"><i class='fa fa-refresh'></i></a></h2>
+	<div class='content'></div>
 </div>
 
 <div class="section">
