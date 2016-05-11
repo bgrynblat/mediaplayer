@@ -64,8 +64,22 @@
 
 		array_pop($array);
 		array_pop($array);
-		//array_splice($array, 0, count($array)-1);
-		//echo $array[1];
+
+		return $array;
+	}
+
+	function checkStatus() {
+		$str = exec("df --output=target,pcent,source | sed -e's/  */ /g' | tr \"\\n\" \"|\"");
+
+		$array = array();
+
+        	$split = explode("|", $str);
+        	foreach($split as $line) {
+        	        foreach($_ENV["STORAGES"] as $mnt) {
+        	                if(strpos($line, $mnt." ") !== false)
+					array_push($array, $line);
+        	        }
+        	}
 
 		return $array;
 	}
