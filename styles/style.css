@@ -125,3 +125,8 @@ a.play {
 .paused_job a.delete {
 	float: right;
 }
+
+/* Storages status */
+.storage {
+	margin-bottom: 20px;
+}

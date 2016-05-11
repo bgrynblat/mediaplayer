@@ -21,14 +21,15 @@
 </div>
 
 <div class="section" id="jobs">
-	<h2>CURRENT JOBS <a href="#" onclick="updateJobs()"><i class='fa fa-refresh'></i></a></h2>
+	<h2>CURRENT JOBS <a href="#" onclick="updateJobs(false)"><i class='fa fa-refresh'></i></a></h2>
 	<div class='content'><i class='fa fa-refresh load'></i></div>
 </div>
 
-<div class="section">
+<div class="section" id="status">
 <h2>STATUS</h2>
 <div class='content'>
 <?php
+	/*
 	$str = exec("df --output=target,pcent,source | grep /dev/ | grep \"/ \"");
 	$percent = explode("%", $str)[0];
 	$percent = explode("/", $percent)[1];
@@ -37,6 +38,7 @@
 	echo "<div style='float: right;'>".$percent."%</div>";
 	echo "<div style='float: left;width: ".$percent."%; background-color: #84CC58; height:20px;'></div>";
 	echo "</div>";
+	*/
 ?>
 </div>
 </div>

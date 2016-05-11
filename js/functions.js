@@ -1,8 +1,7 @@
 function start() {
 	updateFiles();
-	updateJobs();
-
-	setInterval(updateJobs, 10000);
+	updateJobs(true);
+	updateStatus();
 }
 
 function updateFiles() {
@@ -25,7 +24,8 @@ function updateFiles() {
 	});
 }
 
-function updateJobs() {
+function updateJobs(auto) {
+
         $.get("update_jobs.php", function(data) {
                 var content = $("#jobs")[0].children[1];
 
@@ -57,15 +57,17 @@ function updateJobs() {
 
                 	content.innerHTML += str;
                 });
-
         }).fail(function(data) {
                 console.log("error...");
-        });
+	}).done(function() {
+		if(auto)	setTimeout(updateJobs, 10000, true);
+		updateStatus();
+	});
 }
 
 function stopJob(id) {
 	$.get("stop_torrent.php?id="+id, function(data) {
-                updateJobs();
+                updateJobs(false);
         }).fail(function(data) {
                 console.log("error...");
         });
@@ -73,7 +75,7 @@ function stopJob(id) {
 
 function resumeJob(id) {
 	$.get("start_torrent.php?id="+id, function(data) {
-		updateJobs();
+		updateJobs(false);
         }).fail(function(data) {
                 console.log("error...");
         });
@@ -81,7 +83,7 @@ function resumeJob(id) {
 
 function deleteJob(id) {
 	$.get("remove_torrent.php?id="+id, function(data) {
-                updateJobs();
+                updateJobs(false);
         }).fail(function(data) {
                 console.log("error...");
         });
@@ -90,6 +92,35 @@ function deleteJob(id) {
 function deleteFile(file) {
 	$.get("delete_file.php?file="+file, function(data) {
                 updateFiles();
+		updateStatus();
+        }).fail(function(data) {
+                console.log("error...");
+        });
+}
+
+function updateStatus() {
+	$.get("check_status.php", function(data) {
+		var content = $("#status")[0].children[1];
+
+                content.innerHTML = "";
+
+                if(data.storages.length == 0) content.innerHTML = "Error fetching status !";
+
+                data.storages.forEach(function(mnt) {
+                        var array = mnt.split(" ");
+
+                        var mnt = array[0];
+                        var pcent = array[1];
+                        var dev = array[2];
+
+			var str = "<div class='storage' style='border: 1px solid #cccccc; height:20px;'>";
+			str += "<div style='float: right;'>"+dev+" - "+pcent+"</div>";
+			str += "<div style='float: left;width: "+pcent+"; background-color: #84CC58; height:20px;'></div>";
+			str += "</div>";
+
+                        content.innerHTML += str;
+                });
+
         }).fail(function(data) {
                 console.log("error...");
         });
