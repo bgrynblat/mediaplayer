@@ -16,12 +16,12 @@
 <div class="header">HELLO BEN !</div>
 
 <div class="section" id="files">
-	<h2>FILES <a onclick="updateFiles()"><i class='fa fa-refresh'></i></a></h2>
+	<h2>FILES <a href="#" onclick="updateFiles()"><i class='fa fa-refresh'></i></a></h2>
 	<div class='content'><i class='fa fa-refresh load'></i></div>
 </div>
 
 <div class="section" id="jobs">
-	<h2>CURRENT JOBS <a onclick="updateJobs()"><i class='fa fa-refresh'></i></a></h2>
+	<h2>CURRENT JOBS <a href="#" onclick="updateJobs()"><i class='fa fa-refresh'></i></a></h2>
 	<div class='content'><i class='fa fa-refresh load'></i></div>
 </div>
 

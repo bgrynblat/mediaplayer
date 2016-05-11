@@ -2,6 +2,10 @@
 
 include('functions.php');
 
+$force = false;
+if(isset($_GET['force']))
+	$force = true;
+
 $tmp_folder = $_ENV["TMP_FOLDER"];
 $filename = "files.last";
 $tmp_filename = "files.tmp";
@@ -21,7 +25,7 @@ while(file_exists($tmp) && $checks <= 10) {
 $now = time();
 
 $update=false;
-if(file_exists($file)) {
+if(file_exists($file) && !$force) {
 	$filetime = filemtime($file);
 
 	//echo "$file was last modified: ".$filetime;

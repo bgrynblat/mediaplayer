@@ -63,12 +63,13 @@ a {
 a.delete {
 	float: right;
 	color: #FC6D6D;
+	margin-left: 20px;
 }
 
 a.play {
 	color: #7CC284;
 	float: right;
-        margin-right: 20px;
+        margin-left: 25px;
 }
 
 /* Files available */
@@ -84,7 +85,7 @@ a.play {
 .file a.download {
         color: #6CA7BA;
         float: right;
-        margin-right: 25px;
+        margin-left: 25px;
 }
 
 /* Current job */
@@ -117,7 +118,7 @@ a.play {
 
 .paused_job a.start {
 	float: right;
-	margin-right: 20px;
+	margin-left: 20px;
 	color: #7CC284;
 }
 
