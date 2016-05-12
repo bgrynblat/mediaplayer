@@ -75,13 +75,16 @@
 
         	$split = explode("|", $str);
         	foreach($split as $line) {
-        	        foreach($_ENV["STORAGES"] as $mnt) {
-        	                if(strpos($line, $mnt." ") !== false)
-					array_push($array, $line);
-        	        }
+        	        if(strpos($line, "/") !== false) {
+				array_push($array, $line);
+			}
         	}
 
 		return $array;
+	}
+
+	function getMounts() {
+		$array = checkStatus();
 	}
 
 ?>

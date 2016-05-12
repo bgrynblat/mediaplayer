@@ -5,6 +5,6 @@
 
 	$file = $_GET['file'];
 
-	echo exec("rm -rvf \"$file\" 2>&1");
+	echo exec("sudo rm -rvf \"$file\" 2>&1");
 
 ?>

@@ -1,7 +1,6 @@
 function start() {
 	updateFiles();
 	updateJobs(true);
-	updateStatus();
 }
 
 function updateFiles() {
@@ -101,24 +100,31 @@ function deleteFile(file) {
 function updateStatus() {
 	$.get("check_status.php", function(data) {
 		var content = $("#status")[0].children[1];
+		var form = $("#storage_list")[0];
 
                 content.innerHTML = "";
+		form.innerHTML = "";
+
+		//var json = jQuery.parseJSON("'"+data+"'");
+		//console.log(json);
 
                 if(data.storages.length == 0) content.innerHTML = "Error fetching status !";
-
-                data.storages.forEach(function(mnt) {
-                        var array = mnt.split(" ");
-
+                data.storages.forEach(function(storage) {
+                        var array = storage.mnt.split(" ");
                         var mnt = array[0];
                         var pcent = array[1];
                         var dev = array[2];
 
-			var str = "<div class='storage' style='border: 1px solid #cccccc; height:20px;'>";
-			str += "<div style='float: right;'>"+dev+" - "+pcent+"</div>";
-			str += "<div style='float: left;width: "+pcent+"; background-color: #84CC58; height:20px;'></div>";
-			str += "</div>";
+			if(storage.mounted) {
 
-                        content.innerHTML += str;
+				var str = "<div class='storage' style='border: 1px solid #cccccc; height:20px;'>";
+				str += "<div style='float: right;'>"+dev+" - "+pcent+"</div>";
+				str += "<div style='float: left;width: "+pcent+"; background-color: #84CC58; height:20px;'></div>";
+				str += "</div>";
+
+                        	content.innerHTML += str;
+			}
+			else form.innerHTML += "<option value=\""+mnt+"\">"+mnt+"</option>";
                 });
 
         }).fail(function(data) {

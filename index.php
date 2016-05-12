@@ -27,7 +27,11 @@
 
 <div class="section" id="status">
 	<h2>STATUS</h2>
-	<div class='content'></div>
+	<div class='content'><i class='fa fa-refresh load'></i></div>
+	<form id="storages" action="add_storage.php" method="get">
+		<select id="storage_list" name="mount"></select>	
+		<input type="submit" value="Add"></input>
+	<form>
 </div>
 
 <div class="section">

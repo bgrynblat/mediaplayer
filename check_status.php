@@ -5,8 +5,18 @@
 
 	$split = checkStatus();
 
-	foreach($split as $line)
-		$out = $out."\"$line\",";
+	foreach($split as $line) {
+		$out = $out."{\"mnt\":\"$line\",\"mounted\":";
+
+		$mounted = false;
+		foreach($_ENV["STORAGES"] as $mnt) {
+			if(strpos($line, $mnt." ") !== false) 
+				$mounted = "true";
+		}
+		
+		$out = $out.($mounted ? "true" : "false")."},";
+	}
+
 
 	$out = rtrim($out, ",");
 	$out = $out.']}';

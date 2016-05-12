@@ -4,5 +4,17 @@
 
 	$_ENV["STORAGES"] = array("/");
 
-	array_push($_ENV["STORAGES"], "/mnt");
+	//storage management
+	$file = "tmps/storages.cfg";
+	if(file_exists($file)) {
+		$handle = fopen($file, "r");
+		if ($handle) {
+    			while (($line = fgets($handle)) !== false) {
+				array_push($_ENV["STORAGES"], trim($line));
+				//echo "$line";
+			}
+
+			fclose($handle);
+		}
+	}
 ?>

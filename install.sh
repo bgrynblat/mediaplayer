@@ -26,3 +26,8 @@ sed -e "s|{dl_folder}|${CURRENT}|g" transmission-settings.json.default > transmi
 sudo cp transmission-settings.json /etc/transmission-daemon/settings.json
 
 sudo service transmission-daemon start
+
+SUDOER=`sudo -- sh -c 'cat /etc/sudoers | grep www-data | wc -l'`
+if [ $SUDOER -eq 0 ] ; then
+	sudo -- sh -c 'echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers'
+fi
