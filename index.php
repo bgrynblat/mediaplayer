@@ -34,7 +34,7 @@
 	</form>
 </div>
 
-<div class="section">
+<div class="section" id="search">
 <h2>SEARCH TORRENT</h2>
 <div class='content'>
 <form action="search_torrent.php" method="get">
@@ -45,9 +45,18 @@
 </div>
 </div>
 
-<div class="section">
+<div class="section" id="import">
 <h2>IMPORT TORRENT</h2>
 <div class='content'>
+
+<form action="upload_torrent.php" method="post" enctype="multipart/form-data">
+    Select torrent to upload:
+    <input type="file" name="file_to_upload" id="file_to_upload">
+    <input type="submit" value="Upload" name="submit">
+</form>
+
+<span>OR</span>
+
 <form action="import_torrent.php" method="get">
         <label for="torrent">Torrent URL :</label>
         <input id="torrent" name="torrent" type="text"></input>
