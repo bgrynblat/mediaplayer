@@ -31,7 +31,7 @@
 	<form id="storages" action="add_storage.php" method="get">
 		<select id="storage_list" name="mount"></select>	
 		<input type="submit" value="Add"></input>
-	<form>
+	</form>
 </div>
 
 <div class="section">
