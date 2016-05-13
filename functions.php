@@ -22,11 +22,11 @@
 
 					array_push($array, $file);
 				}
-			} else if(is_dir($f)) {
-				$arr = getFilesRecursively("$folder/$f", $origin);
+			} else if(is_dir("$folder/$f")) {
+				$arr = getFilesRecursively("$folder/$f", "$origin/$f");
 				foreach($arr as $a) {
 					$file = array();
-                                        array_push($file, "$origin/$f/$a[0]");
+                                        array_push($file, "$a[0]");
                                         array_push($file, "$a[1]");
                                         array_push($file, "$a[2]");
 
