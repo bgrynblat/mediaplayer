@@ -127,7 +127,35 @@ function updateStatus() {
 			else form.innerHTML += "<option value=\""+mnt+"\">"+mnt+"</option>";
                 });
 
+		if(data.vpn != undefined) {
+			var vpn = $(".vpn")[0];
+
+			var str = "<span>VPN :</span>";
+			str += '<div id="vpn-toggle" class="toggle-button';
+
+			if(data.vpn)
+				str += " toggle-button-selected";
+
+			str += '" onclick="toggleVPN()"><button></button></div>';
+
+			vpn.innerHTML = str;
+		}
+
         }).fail(function(data) {
                 console.log("error...");
+        });
+}
+
+function toggleVPN() {
+	var vpn = $("#vpn-toggle")[0];
+	var content = vpn.innerHTML;
+
+	vpn.innerHTML = "<i class='fa fa-refresh load'></i>";
+
+	$.get("toggle_vpn.php", function(data) {
+		
+	}).fail(function(data) {
+                console.log("error...");
+		vpn.innerHTML = content;
         });
 }

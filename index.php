@@ -7,6 +7,7 @@
 	<title>Media player</title>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="stylesheet" type="text/css" href="styles/font-awesome.css">
+	<link href="styles/toggle_button.css" rel="stylesheet">
 
     	<script src="js/jquery-2.2.3.min.js"></script>
     	<script src="js/functions.js"></script>
@@ -32,6 +33,7 @@
 		<select id="storage_list" name="mount"></select>	
 		<input type="submit" value="Add"></input>
 	</form>
+	<div class='vpn'></div>
 </div>
 
 <div class="section" id="search">

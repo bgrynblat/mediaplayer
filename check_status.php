@@ -19,7 +19,12 @@
 
 
 	$out = rtrim($out, ",");
-	$out = $out.']}';
+	$out = $out.'],"vpn":';
+
+	$val = exec("ifconfig tun0; echo $?;");
+	$out = $out.($val == "1" ? "false" : "true");
+
+	$out = $out.'}';
 
 	header('Content-Type: application/json');
 
