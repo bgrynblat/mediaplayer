@@ -19,12 +19,12 @@
 
 
 	$out = rtrim($out, ",");
-	$out = $out.'],"vpn":';
+	$out = $out.'],"vpn":{"status":';
 
-	$val = exec("ifconfig tun0; echo $?;");
-	$out = $out.($val == "1" ? "false" : "true");
+	$val = checkVPNStatus();
+	$out = $out.($val ? "true" : "false");
 
-	$out = $out.'}';
+	$out = $out.', "type": "'.$_ENV["VPN"]["type"].'"}}';
 
 	header('Content-Type: application/json');
 

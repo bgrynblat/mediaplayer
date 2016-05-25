@@ -87,4 +87,18 @@
 		$array = checkStatus();
 	}
 
+	function checkVPNStatus() {
+		$dev = "";
+
+		if($_ENV["VPN"]["type"] == "pptp")
+			$dev = "ppp0";
+		else if($_ENV["VPN"]["type"] == "openvpn")
+			$dev = "tun0";
+
+		$val = exec("ifconfig $dev ; echo $?;");
+        	$out = ($val == "1" ? false : true);
+
+		return $out;
+	}
+
 ?>

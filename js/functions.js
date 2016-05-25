@@ -133,7 +133,7 @@ function updateStatus() {
 			var str = "<span>VPN :</span>";
 			str += '<div id="vpn-toggle" class="toggle-button';
 
-			if(data.vpn)
+			if(data.vpn.status)
 				str += " toggle-button-selected";
 
 			str += '" onclick="toggleVPN()"><button></button></div>';

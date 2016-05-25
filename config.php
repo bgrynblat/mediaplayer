@@ -4,6 +4,9 @@
 
 	$_ENV["STORAGES"] = array("/");
 
+	$_ENV["VPN"]["present"] = true;
+	$_ENV["VPN"]["type"] = "pptp";	#Can be : pptp / openvpn
+
 	//storage management
 	$file = "tmps/storages.cfg";
 	if(file_exists($file)) {
