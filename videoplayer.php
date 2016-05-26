@@ -11,6 +11,8 @@
 
 	$tmp = explode("/", $video);
 	$name = $tmp[count($tmp)-1];
+
+	$url = $video;
 ?>
 
 <html data-cast-api-enabled="true">
