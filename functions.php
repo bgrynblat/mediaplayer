@@ -1,6 +1,14 @@
 <?php
 	include('config.php');
 
+	function removeSpecialChars($str) {
+		$array = array("[", "]", "{", "}", " ", "%", "$", "/", "<", ">", "|", "#", "&", "!", "(", ")", ",", ":", ";", "?");
+		foreach($array as $c) 
+			$str = str_replace($c, ".", $str);
+
+		return $str;
+	}
+
 	function getFilesRecursively($folder, $origin) {
 		$files = scandir($folder);
                 $files = array_splice($files, 2, count($files));
@@ -88,15 +96,19 @@
 	}
 
 	function checkVPNStatus() {
-		$dev = "";
+		$out = false;
 
-		if($_ENV["VPN"]["type"] == "pptp")
-			$dev = "ppp0";
-		else if($_ENV["VPN"]["type"] == "openvpn")
-			$dev = "tun0";
+		if($_ENV["VPN"]["present"]) {
+			$dev = "";
 
-		$val = exec("ifconfig $dev ; echo $?;");
-        	$out = ($val == "1" ? false : true);
+			if($_ENV["VPN"]["type"] == "pptp")
+				$dev = "ppp0";
+			else if($_ENV["VPN"]["type"] == "openvpn")
+				$dev = "tun0";
+
+			$val = exec("ifconfig $dev ; echo $?;");
+        		$out = ($val == "1" ? false : true);
+		}
 
 		return $out;
 	}

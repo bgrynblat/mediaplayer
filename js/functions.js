@@ -131,12 +131,12 @@ function updateStatus() {
 			var vpn = $(".vpn")[0];
 
 			var str = "<span>VPN :</span>";
-			str += '<div id="vpn-toggle" class="toggle-button';
-
-			if(data.vpn.status)
-				str += " toggle-button-selected";
-
-			str += '" onclick="toggleVPN()"><button></button></div>';
+			if(data.vpn.present) {
+				str += "<span>"+data.vpn.type.toUpperCase()+" </span>";
+				str += '<div id="vpn-toggle" class="toggle-button';
+				if(data.vpn.status)	str += " toggle-button-selected";
+				str += '" onclick="toggleVPN()"><button></button></div>';
+			} else	str += "<span>Not configured</span>"
 
 			vpn.innerHTML = str;
 		}
@@ -153,6 +153,7 @@ function toggleVPN() {
 	vpn.innerHTML = "<i class='fa fa-refresh load'></i>";
 
 	$.get("toggle_vpn.php", function(data) {
+		setTimeout(updateStatus(), 5000);
 		
 	}).fail(function(data) {
                 console.log("error...");
