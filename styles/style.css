@@ -136,8 +136,13 @@ a.play {
 }
 
 .vpn span {
-	margin: 0 10px 0 20px;
+	margin: 0 0 0 20px;
     	font-size: 20px;
+	vertical-align: top;
+}
+
+.vpn #vpn-toggle {
+	margin-top: 0;
 }
 /* Search */
 

@@ -2,6 +2,16 @@
 
 	include('functions.php');
 
+	if(isset($_GET["force"])) {
+		$val = ($_ENV["VPN"]["force"] ? "false" : "true");
+		echo exec('sudo sed -i \'s/.*"VPN".*"force".*/\\t$_ENV["VPN"]["force"] = '.$val.';/\' config.php 2>&1');
+		sleep(2);
+		if($val == "true") {
+			exec("sudo scripts/force_vpn.sh > ".$_ENV["TMP_FOLDER"]."/force_vpn.log &");
+		} else {
+			exec("sudo pkill -9 force_vpn.sh");
+		}
+	} else {
 	$dev = "";
 	$enabled = false;
 
@@ -53,5 +63,6 @@
 		echo "\n";
 		sleep(5);
 		echo exec("sudo route add -net 0.0.0.0 dev $dev 2>&1");
+	}
 	}
 ?>

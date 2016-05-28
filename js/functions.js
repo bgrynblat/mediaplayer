@@ -130,13 +130,20 @@ function updateStatus() {
 		if(data.vpn != undefined) {
 			var vpn = $(".vpn")[0];
 
-			var str = "<span>VPN :</span>";
 			if(data.vpn.present) {
-				str += "<span>"+data.vpn.type.toUpperCase()+" </span>";
+				var str = "<span>VPN :	</span>";
 				str += '<div id="vpn-toggle" class="toggle-button';
 				if(data.vpn.status)	str += " toggle-button-selected";
 				str += '" onclick="toggleVPN()"><button></button></div>';
-			} else	str += "<span>Not configured</span>"
+				str += "<span>"+data.vpn.type.toUpperCase()+" </span>";
+
+				str += "<br/><span>Force : </span>";
+				str += '<div id="vpn-toggle" class="toggle-button';
+                                if(data.vpn.force)     str += " toggle-button-selected";
+                                str += '" onclick="toggleVPNForce()"><button></button></div>';
+				if(data.vpn.force)     str += "<span>Always download via VPN</span>";
+
+			} else	str += "<span>VPN not configured</span>"
 
 			vpn.innerHTML = str;
 		}
@@ -158,5 +165,13 @@ function toggleVPN() {
 	}).fail(function(data) {
                 console.log("error...");
 		vpn.innerHTML = content;
+        });
+}
+
+function toggleVPNForce() {
+	$.get("toggle_vpn.php?force=true", function(data) {
+		setTimeout(updateStatus(), 2000);
+        }).fail(function(data) {
+                console.log("error...");
         });
 }

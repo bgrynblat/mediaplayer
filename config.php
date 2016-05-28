@@ -6,6 +6,7 @@
 
 	$_ENV["VPN"]["present"] = true;
 	$_ENV["VPN"]["type"] = "pptp";	#Can be : pptp / openvpn
+	$_ENV["VPN"]["force"] = true;
 
 	//storage management
 	$file = "tmps/storages.cfg";

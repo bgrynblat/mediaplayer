@@ -25,6 +25,7 @@
 	$out = $out.($val ? "true" : "false");
 
 	$out = $out.', "present": "'.$_ENV["VPN"]["present"].'"';
+	$out = $out.', "force": "'.$_ENV["VPN"]["force"].'"';
 	$out = $out.', "type": "'.$_ENV["VPN"]["type"].'"}}';
 
 	header('Content-Type: application/json');
