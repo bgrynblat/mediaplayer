@@ -4,6 +4,11 @@
 
 	$_ENV["STORAGES"] = array("/");
 
+	$_ENV["transmission"]["host"] = "localhost";
+	$_ENV["transmission"]["port"] = "9091";
+	$_ENV["transmission"]["user"] = "transmission";
+	$_ENV["transmission"]["pass"] = "transmission";
+
 	$_ENV["VPN"]["present"] = true;
 	$_ENV["VPN"]["type"] = "pptp";	#Can be : pptp / openvpn
 	$_ENV["VPN"]["force"] = true;

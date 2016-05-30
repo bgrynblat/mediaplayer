@@ -45,12 +45,12 @@ function updateJobs(auto) {
 			var name = array[array.length-1];
 
 			var str = "<div class='current_job'>"+name+" ("+pcent+" | <i class='fa fa-arrow-down'></i> "+down+" kb/s | <i class='fa fa-arrow-up'></i> "+up+" kb/s | "+status+")";
-			str += "<a class='delete' href='#' onclick='deleteJob(\""+id+"\");'><i class='fa fa-remove'></i></a>";
+			str += "<a class='delete' href='#' onclick='actionJob(\"remove\", \""+id+"\");'><i class='fa fa-remove'></i></a>";
 
 			if(status == "Stopped")
-				str += "<a class='play' href='#' onclick='resumeJob(\""+id+"\");'><i class='fa fa-play'></i></a>";
+				str += "<a class='play' href='#' onclick='actionJob(\"start\", \""+id+"\");'><i class='fa fa-play'></i></a>";
 			else
-				str += "<a class='pause' href='#' onclick='stopJob(\""+id+"\");'><i class='fa fa-pause'></i></a>";
+				str += "<a class='pause' href='#' onclick='actionJob(\"stop\", \""+id+"\");'><i class='fa fa-pause'></i></a>";
 
 			str += "<div class='progress-bar' style='width: "+pcent+"'></div></div>";
 
@@ -64,24 +64,8 @@ function updateJobs(auto) {
 	});
 }
 
-function stopJob(id) {
-	$.get("stop_torrent.php?id="+id, function(data) {
-                updateJobs(false);
-        }).fail(function(data) {
-                console.log("error...");
-        });
-}
-
-function resumeJob(id) {
-	$.get("start_torrent.php?id="+id, function(data) {
-		updateJobs(false);
-        }).fail(function(data) {
-                console.log("error...");
-        });
-}
-
-function deleteJob(id) {
-	$.get("remove_torrent.php?id="+id, function(data) {
+function actionJob(action, id) {
+	$.get("action_torrent.php?action="+action+"&id="+id, function(data) {
                 updateJobs(false);
         }).fail(function(data) {
                 console.log("error...");
