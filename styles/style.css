@@ -60,6 +60,10 @@ a {
 	text-decoration: none;
 }
 
+a:hover {
+	cursor: pointer;
+}
+
 a.delete {
 	float: right;
 	color: #FC6D6D;

@@ -22,7 +22,11 @@
 </div>
 
 <div class="section" id="jobs">
-	<h2>CURRENT JOBS <a href="#" onclick="updateJobs(false)"><i class='fa fa-refresh'></i></a></h2>
+	<h2>CURRENT JOBS 
+		<a onclick="updateJobs(false)"><i class='fa fa-refresh'></i></a>
+		<a onclick="actionAll('stop')"><i class='fa fa-pause'></i></a>
+		<a onclick="actionAll('start')"><i class='fa fa-play'></i></a>
+	</h2>
 	<div class='content'><i class='fa fa-refresh load'></i></div>
 </div>
 

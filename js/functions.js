@@ -1,6 +1,9 @@
+var jobs = "";
+
 function start() {
 	updateFiles();
 	updateJobs(true);
+	updateStatus();
 }
 
 function updateFiles() {
@@ -12,7 +15,7 @@ function updateFiles() {
 		if(data.files.length == 0) content.innerHTML = "No files found !";
 
 		data.files.forEach(function(file) {
-			content.innerHTML += "<div class='file'>"+file["filename"]+"<a class='delete' onclick='deleteFile(\""+file["url"]+"\");' href='#'><i class='fa fa-remove'></i></a>"+
+			content.innerHTML += "<div class='file'>"+file["filename"]+"<a class='delete' onclick='deleteFile(\""+file["url"]+"\");'><i class='fa fa-remove'></i></a>"+
 						"<a class='play' href='videoplayer.php?file="+file["url"]+"'><i class='fa fa-play'></i></a>"+
 						"<a class='download' download='' target='_blank' href='download.php?file="+file["url"]+"&amp;mode=1'><i class='fa fa-cloud-download'></i></a>"+
 						"</div>";
@@ -20,6 +23,8 @@ function updateFiles() {
 
 	}).fail(function(data) {
 		console.log("error...");
+	}).done(function() {
+		setTimeout(updateStatus, 60000, true);
 	});
 }
 
@@ -31,7 +36,7 @@ function updateJobs(auto) {
 		content.innerHTML = "";
 
 		if(data.jobs.length == 0) content.innerHTML = "No active jobs !";
-
+		jobs = data.jobs;
                 data.jobs.forEach(function(job) {
 			var array = job["job"].split(";");
 
@@ -45,12 +50,12 @@ function updateJobs(auto) {
 			var name = array[array.length-1];
 
 			var str = "<div class='current_job'>"+name+" ("+pcent+" | <i class='fa fa-arrow-down'></i> "+down+" kb/s | <i class='fa fa-arrow-up'></i> "+up+" kb/s | "+status+")";
-			str += "<a class='delete' href='#' onclick='actionJob(\"remove\", \""+id+"\");'><i class='fa fa-remove'></i></a>";
+			str += "<a class='delete' onclick='actionJob(\"remove\", \""+id+"\");'><i class='fa fa-remove'></i></a>";
 
 			if(status == "Stopped")
-				str += "<a class='play' href='#' onclick='actionJob(\"start\", \""+id+"\");'><i class='fa fa-play'></i></a>";
+				str += "<a class='play' onclick='actionJob(\"start\", \""+id+"\");'><i class='fa fa-play'></i></a>";
 			else
-				str += "<a class='pause' href='#' onclick='actionJob(\"stop\", \""+id+"\");'><i class='fa fa-pause'></i></a>";
+				str += "<a class='pause' onclick='actionJob(\"stop\", \""+id+"\");'><i class='fa fa-pause'></i></a>";
 
 			str += "<div class='progress-bar' style='width: "+pcent+"'></div></div>";
 
@@ -60,7 +65,6 @@ function updateJobs(auto) {
                 console.log("error...");
 	}).done(function() {
 		if(auto)	setTimeout(updateJobs, 10000, true);
-		updateStatus();
 	});
 }
 
@@ -70,6 +74,13 @@ function actionJob(action, id) {
         }).fail(function(data) {
                 console.log("error...");
         });
+}
+
+function actionAll(action) {
+	jobs.forEach(function(job) {
+		var id = job["job"].split(";")[0];
+		actionJob(action, id);
+	});
 }
 
 function deleteFile(file) {
