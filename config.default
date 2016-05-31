@@ -1,0 +1,26 @@
+DL_FOLDER=medias
+TMP_FOLDER=tmps
+
+# Host
+server.host=localhost
+
+# SSH client config
+# ssh key must be installed in remote server
+# The following is unused if server.host = localhost or 127.0.0.1
+server.ssh.user=bgr
+
+# Web config
+# The following is unused if server.host = localhost or 127.0.0.1
+server.web.port=80
+server.web.protocol=http
+server.web.path=mp
+
+# Transmission config
+server.transmission.port=9091
+server.transmission.user=transmission
+server.transmission.pass=transmission
+
+# VPN config
+VPN.present=true
+VPN.type=pptp
+VPN.force=true

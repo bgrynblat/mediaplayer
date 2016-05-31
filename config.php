@@ -1,21 +1,30 @@
 <?php
-	$_ENV["DL_FOLDER"] = "medias";
-	$_ENV["TMP_FOLDER"] = "tmps";
+	function getConfValue($key, $file) {
+		$val = exec("cat $file | grep $key | grep -v \#");
+		$arr = split("=", $val, 2);
+		return $arr[1];
+	}
 
+	$cfg = "config.default";
+	if(file_exists("config.cfg"))
+		$file = "config.cfg";
+
+	$_ENV["DL_FOLDER"] = getConfValue("DL_FOLDER", $file);
+	$_ENV["TMP_FOLDER"] = getConfValue("TMP_FOLDER", $file);
 	$_ENV["STORAGES"] = array("/");
 
-	$_ENV["server"]["host"] = "home.bengr.net";
-	$_ENV["server"]["ssh"]["user"] = "bgr";
-	$_ENV["server"]["web"]["port"] = 80;
-	$_ENV["server"]["web"]["protocol"] = "http";
-	$_ENV["server"]["web"]["path"] = "mp";
-	$_ENV["server"]["transmission"]["port"] = 9091;
-	$_ENV["server"]["transmission"]["user"] = "transmission";
-	$_ENV["server"]["transmission"]["pass"] = "transmission";
+	$_ENV["server"]["host"] = getConfValue("server.host", $file);
+	$_ENV["server"]["ssh"]["user"] = getConfValue("server.ssh.user", $file);
+	$_ENV["server"]["web"]["port"] = getConfValue("server.web.port", $file);
+	$_ENV["server"]["web"]["protocol"] = getConfValue("server.web.protocol", $file);
+	$_ENV["server"]["web"]["path"] = getConfValue("server.web.path", $file);
+	$_ENV["server"]["transmission"]["port"] = getConfValue("server.transmission.port", $file);
+	$_ENV["server"]["transmission"]["user"] = getConfValue("server.transmission.user", $file);
+	$_ENV["server"]["transmission"]["pass"] = getConfValue("server.transmission.pass", $file);
 
-	$_ENV["VPN"]["present"] = true;
-	$_ENV["VPN"]["type"] = "pptp";	#Can be : pptp / openvpn
-	$_ENV["VPN"]["force"] = true;
+	$_ENV["VPN"]["present"] = getConfValue("VPN.present", $file);
+	$_ENV["VPN"]["type"] = getConfValue("VPN.type", $file);	#Can be : pptp / openvpn
+	$_ENV["VPN"]["force"] = getConfValue("VPN.force", $file);
 
 	//storage management
 	$file = "tmps/storages.cfg";
