@@ -1,4 +1,5 @@
 var jobs = "";
+var storages = "";
 
 function start() {
 	updateFiles();
@@ -15,7 +16,7 @@ function updateFiles() {
 		if(data.files.length == 0) content.innerHTML = "No files found !";
 
 		data.files.forEach(function(file) {
-			content.innerHTML += "<div class='file'>"+file["filename"]+"<a class='delete' onclick='deleteFile(\""+file["url"]+"\");'><i class='fa fa-remove'></i></a>"+
+			content.innerHTML += "<div class='file' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+file["filename"]+"<a class='delete' onclick='deleteFile(\""+file["url"]+"\");'><i class='fa fa-remove'></i></a>"+
 						"<a class='play' href='videoplayer.php?file="+file["url"]+"'><i class='fa fa-play'></i></a>"+
 						"<a class='download' download='' target='_blank' href='download.php?file="+file["url"]+"&amp;mode=1'><i class='fa fa-cloud-download'></i></a>"+
 						"</div>";
@@ -26,6 +27,26 @@ function updateFiles() {
 	}).done(function() {
 		setTimeout(updateStatus, 60000, true);
 	});
+}
+
+function dragEvent(ev) {
+	ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dropEvent(ev) {
+	ev.preventDefault();
+	var file=ev.dataTransfer.getData("text");
+	var dest = ev.target.id;
+
+	if(dest != "/") {
+	$.get("move_file.php?file="+file+"&dest="+dest, function(data) {
+		console.log(data);
+	}).fail(function(data) {
+                console.log("error...");
+        }).done(function() {
+		console.log("Done !");
+        });
+	} else console.log("Not allowed");
 }
 
 function updateJobs(auto) {
@@ -92,6 +113,10 @@ function deleteFile(file) {
         });
 }
 
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
 function updateStatus() {
 	$.get("check_status.php", function(data) {
 		var content = $("#status")[0].children[1];
@@ -104,6 +129,7 @@ function updateStatus() {
 		//console.log(json);
 
                 if(data.storages.length == 0) content.innerHTML = "Error fetching status !";
+		storages = data.storages;
                 data.storages.forEach(function(storage) {
                         var array = storage.mnt.split(" ");
                         var mnt = array[0];
@@ -112,9 +138,9 @@ function updateStatus() {
 
 			if(storage.mounted) {
 
-				var str = "<div class='storage' style='border: 1px solid #cccccc; height:20px;'>";
-				str += "<div style='float: right;'>"+dev+" - "+pcent+"</div>";
-				str += "<div style='float: left;width: "+pcent+"; background-color: #84CC58; height:20px;'></div>";
+				var str = "<div class='storage' id='"+mnt+"' ondrop='dropEvent(event)' ondragover='allowDrop(event)' style='border: 1px solid #cccccc; height:20px;'>";
+				str += "<div id='"+mnt+"' style='float: right;'>"+dev+" - "+pcent+"</div>";
+				str += "<div id='"+mnt+"' style='float: left;width: "+pcent+"; background-color: #84CC58; height:20px;'></div>";
 				str += "</div>";
 
                         	content.innerHTML += str;
