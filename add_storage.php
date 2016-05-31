@@ -1,6 +1,6 @@
 <?php
 
-	include('config.php');
+	include('functions.php');
 
 	if(!isset($_GET["mount"])) {
 		http_response_code(400);

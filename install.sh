@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# GENERATE SSH KEY FOR USER www-data WITH : sudo -u www-data ssh-keygen
+# Then upload it to the server
+
 echo "Enter app name (app will be available at http://localhost/<app_name>) : "
 read APP_NAME
 

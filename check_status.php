@@ -1,6 +1,11 @@
 <?php
 	include('functions.php');
 
+	if($_ENV["server"]["host"] != "localhost" && $_ENV["server"]["host"] != "127.0.0.1") {
+		HTTPRequest("tmps/storages.cfg", "tmps/storages.cfg");
+		reloadStorages();
+	}
+
 	$out = '{"storages":[';
 
 	$split = checkStatus();

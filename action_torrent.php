@@ -3,13 +3,12 @@
 	if(!isset($_GET['id']) || !isset($_GET["action"]))
 		exit();
 
-	include("config.php");
+	include("functions.php");
 
 	$id = $_GET['id'];
 	$action = $_GET['action'];
 
-
-	$transmission = "/usr/bin/transmission-remote ".$_ENV["transmission"]["host"].":".$_ENV["transmission"]["port"]." -n '".$_ENV["transmission"]["user"].":".$_ENV["transmission"]["pass"]."'";
+	$transmission = getTransmissionRemoteCmd("");
 
 	if($action == "start")	echo exec("$transmission -t $id -s");
 	else if($action == "stop")  echo exec("$transmission -t $id -S");

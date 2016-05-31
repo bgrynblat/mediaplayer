@@ -30,12 +30,12 @@
 
 		case "pptp":
 			$dev = "ppp0";
-			$val = exec("ifconfig ppp0; echo $?;");
-			if($val == "0")	//VPN is activated
-				echo exec("sudo poff 2>&1");
-			else {
-				echo exec("sudo pon unifiedvpn.com 2>&1");
+			$val = executeCommand("ifconfig ppp0 | wc -l");
+			if($val == "0")	 { //VPN is deactivated
+				echo executeCommand("sudo pon unifiedvpn.com 2>&1");
 				$enable = true;
+			} else {
+				echo executeCommand("sudo poff 2>&1");
 			}
 			break;
 	}
@@ -57,12 +57,12 @@
 		echo "attempts : $attempts \n";
 		echo "sudo ip route add default dev $dev \n";
 
-		echo exec("ifconfig $dev | tr \"\n\" \"|\"");
+		echo executeCommand("/sbin/ifconfig $dev | tr \"\n\" \"|\"");
 
 		//echo exec("sudo ip route add default dev $dev 2>&1");
 		echo "\n";
 		sleep(5);
-		echo exec("sudo route add -net 0.0.0.0 dev $dev 2>&1");
+		//echo exec("sudo route add -net 0.0.0.0 dev $dev 2>&1");
 	}
 	}
 ?>

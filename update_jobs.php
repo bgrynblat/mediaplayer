@@ -21,7 +21,6 @@ while(file_exists($tmp) && $checks <= 10) {
 $now = time();
 	//echo "Lets do it";
 	$files = checkJobs();
-
 	$handle = fopen($tmp, "w");
 	fwrite($handle, "{\"updated\":\"".($now+1000)."\",\"jobs\":[");
 

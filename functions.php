@@ -1,5 +1,5 @@
 <?php
-	include('config.php');
+	include_once('config.php');
 
 	function removeSpecialChars($str) {
 		$array = array("[", "]", "{", "}", " ", "%", "$", "/", "<", ">", "|", "#", "&", "!", "(", ")", ",", ":", ";", "?");
@@ -53,6 +53,68 @@
 		return $array;
 	}
 
+	function getTransmissionRemoteCmd($action) {
+		$transmission = "/usr/bin/transmission-remote ".$_ENV["server"]["host"].":".$_ENV["server"]["transmission"]["port"]." -n '".$_ENV["server"]["transmission"]["user"].":".$_ENV["server"]["transmission"]["pass"]."'";
+		$transmission = $transmission." ".$action;
+
+		return $transmission;
+	}
+
+	function reloadStorages() {
+		//storage management
+	        $file = "tmps/storages.cfg";
+	        if(file_exists($file)) {
+	                $handle = fopen($file, "r");
+	                if ($handle) {
+	                        while (($line = fgets($handle)) !== false) {
+	                                array_push($_ENV["STORAGES"], trim($line));
+	                                //echo "$line";
+	                        }
+
+	                        fclose($handle);
+	                }
+	        }
+	}
+
+	function getUrl($file) {
+		$prot = $_ENV["server"]["web"]["protocol"];
+                $host = $_ENV["server"]["host"];
+                $path = $_ENV["server"]["web"]["path"];
+
+		$url = "$prot://$host/$path/$file";
+
+		return $url;
+	}
+
+	function HTTPRequest($file, $out) {
+		$prot = $_ENV["server"]["web"]["protocol"];
+        	$host = $_ENV["server"]["host"];
+		$path = $_ENV["server"]["web"]["path"];
+
+		$url = getUrl($file);
+		$req = "curl $url > $out";
+
+		exec("echo $req >> tmps/cmds.log");
+		exec($req);
+	}
+
+	function executeCommand($cmd) {
+		$host = $_ENV["server"]["host"];
+		$fcmd = "";
+
+		if($host == "localhost" || $host == "127.0.0.1")
+			$fcmd = $cmd;
+		else {
+			$user = $_ENV["server"]["ssh"]["user"];
+			$cmd = str_replace("\"", "\\\"", $cmd);
+			$fcmd = "ssh $user@$host \"".$cmd."\"";
+		}
+		exec("echo $fcmd >> tmps/cmds.log");
+		$out = exec($fcmd." 2>&1");
+		exec("echo 'OUT = $out' >> tmps/cmds.log");
+		return $out;
+	}
+
 	function getFiles() {
 		//$files = scandir($_ENV['DL_FOLDER']);
 		$files = getFilesRecursively($_ENV['DL_FOLDER'], $_ENV['DL_FOLDER']);
@@ -67,7 +129,14 @@
 	}
 
 	function checkJobs() {
-		$out = exec("scripts/check_jobs.sh");
+		//$out = exec("scripts/check_jobs.sh");
+
+		//PREFIX="tmps"
+		$tr = getTransmissionRemoteCmd("-l");
+
+		$cmd = "$tr | tr \"\n\" \"|\" | sed -e's/  /;/g' | sed -e 's/;;*/;/g' |  sed -e's/; */;/g' | sed -e's/|;*/|/g'";
+		$out = exec($cmd);
+
 		$array = explode("|", $out);
 
 		array_pop($array);
@@ -77,7 +146,7 @@
 	}
 
 	function checkStatus() {
-		$str = exec("df --output=target,pcent,source | sed -e's/  */ /g' | tr \"\\n\" \"|\"");
+		$str = executeCommand("df --output=target,pcent,source | sed -e's/  */ /g' | tr \"\\n\" \"|\" 2>&1");
 
 		$array = array();
 
@@ -106,8 +175,9 @@
 			else if($_ENV["VPN"]["type"] == "openvpn")
 				$dev = "tun0";
 
-			$val = exec("ifconfig $dev ; echo $?;");
-        		$out = ($val == "1" ? false : true);
+			//$val = exec("ifconfig $dev ; echo $?;");
+			$val = executeCommand("/sbin/ifconfig $dev | wc -l");
+        		$out = ($val == "0" ? false : true);
 		}
 
 		return $out;

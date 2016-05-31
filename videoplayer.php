@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
 <?php
-	include('config.php');
+	include('functions.php');
 
+	$ip = $_SERVER['REMOTE_ADDR'];
 	$video = $_GET['file'];
-	$video_url = $_ENV['DL_FOLDER']."/".$video;
-	
-	$url = "download.php?file=".$video;
-	$url_dl = $url."&mode=1";
+	$url = "";
 
-	$tmp = explode("/", $video);
-	$name = $tmp[count($tmp)-1];
-
-	$url = $video;
+        if($_ENV["server"]["host"] != "localhost" && $_ENV["server"]["host"] != "127.0.0.1") {
+                executeCommand("sudo ip route add $ip via 192.168.1.1 dev eth0");
+                $url = getUrl($video);
+        } else {
+		$url = $video;
+	}
 ?>
 
 <html data-cast-api-enabled="true">

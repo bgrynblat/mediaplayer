@@ -13,9 +13,10 @@ if(isset($_POST["submit"])) {
 	echo $_FILES["file_to_upload"]["tmp_name"]."<br/>";
 	echo $_FILES["file_to_upload"]["error"]."<br/>";
 
-	echo "Loading...";
-	if(move_uploaded_file($_FILES["file_to_upload"]['tmp_name'], $target_file)) 
-		echo exec("/usr/bin/transmission-remote -n 'transmission:transmission' -a $target_file 2>&1");
+	if(move_uploaded_file($_FILES["file_to_upload"]['tmp_name'], $target_file)) {
+		$transmission = getTransmissionRemoteCmd("-a $target_file 2>&1");
+		echo exec($transmission);
+	}
 }
 ?>
 <br />

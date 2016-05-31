@@ -4,10 +4,14 @@
 
 	$_ENV["STORAGES"] = array("/");
 
-	$_ENV["transmission"]["host"] = "localhost";
-	$_ENV["transmission"]["port"] = "9091";
-	$_ENV["transmission"]["user"] = "transmission";
-	$_ENV["transmission"]["pass"] = "transmission";
+	$_ENV["server"]["host"] = "home.bengr.net";
+	$_ENV["server"]["ssh"]["user"] = "bgr";
+	$_ENV["server"]["web"]["port"] = 80;
+	$_ENV["server"]["web"]["protocol"] = "http";
+	$_ENV["server"]["web"]["path"] = "mp";
+	$_ENV["server"]["transmission"]["port"] = 9091;
+	$_ENV["server"]["transmission"]["user"] = "transmission";
+	$_ENV["server"]["transmission"]["pass"] = "transmission";
 
 	$_ENV["VPN"]["present"] = true;
 	$_ENV["VPN"]["type"] = "pptp";	#Can be : pptp / openvpn
