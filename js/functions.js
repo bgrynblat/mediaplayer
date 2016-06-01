@@ -20,7 +20,7 @@ function updateFiles() {
 		var id=0;
 		data.files.forEach(function(file) {
 			id++;
-			content.innerHTML += "<div class='file' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+file["filename"]+" ("+file["size"]+")"+
+			content.innerHTML += "<div class='file fileid"+id+"' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+file["filename"]+" ("+file["size"]+")"+
 						"<a id='deletebtn"+id+"' class='delete' onclick='deleteFile(\""+file["url"]+"\", "+id+");'><i class='fa fa-remove'></i></a>"+
 						"<a class='play' href='videoplayer.php?file="+file["url"]+"'><i class='fa fa-play'></i></a>"+
 						"<a class='download' download='' target='_blank' href='download.php?file="+file["url"]+"&amp;mode=1'><i class='fa fa-cloud-download'></i></a>"+
@@ -37,21 +37,37 @@ function updateFiles() {
 
 function dragEvent(ev) {
 	ev.dataTransfer.setData("text", ev.target.id);
+	var id = 0;
+	ev.target.classList.forEach(function(c) {
+		if(/fileid.*/.test(c))
+			id = c;
+	});
+	ev.dataTransfer.setData("id", id);
+	console.log(ev);
 }
 
 function dropEvent(ev) {
 	ev.preventDefault();
 	var file=ev.dataTransfer.getData("text");
+	var id=ev.dataTransfer.getData("id");
 	var dest = ev.target.id;
 
 	if(dest != "/") {
-	$.get("move_file.php?file="+file+"&dest="+dest, function(data) {
-		console.log(data);
-	}).fail(function(data) {
-                console.log("error...");
-        }).done(function() {
-		console.log("Done !");
-        });
+		var div=$('.'+id)[0];
+		console.log(div);
+		var content = div.innerHTML;
+
+		div.innerHTML = file+" - Copy in progress... <i class='fa fa-refresh load'></i>";
+
+		$.get("move_file.php?file="+file+"&dest="+dest, function(data) {
+			console.log(data);
+		}).fail(function(data) {
+        	        console.log("error...");
+			div.innerHTML = content;
+        	}).done(function() {
+			console.log("Done !");
+			setTimeout(updateFiles, 40000);
+        	});
 	} else console.log("Not allowed");
 }
 
