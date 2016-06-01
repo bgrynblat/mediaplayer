@@ -12,13 +12,13 @@ if [ $FORCE == "true" ] ; then
 		let NB_JOBS=`/usr/bin/transmission-remote -n 'transmission:transmission' -l | wc -l`
 		let NB_JOBS=$NB_JOBS-2
 
+		JOBS=`/usr/bin/transmission-remote -n 'transmission:transmission' -l | tail -n +2 | head -n -1 | awk '{print $1}'`
+
 		if [ $NB_JOBS -gt 0 ] ; then
 			echo "$NB_JOBS jobs, stopping transmission"
-			let i=1
-			while [ $i -le $NB_JOBS ] ; do
-				echo "/usr/bin/transmission-remote -n 'transmission:transmission' -t $i -S"
-				/usr/bin/transmission-remote -n 'transmission:transmission' -t $i -S 2>&1
-				let i=$i+1
+			for J in $JOBS ; do
+				echo "/usr/bin/transmission-remote -n 'transmission:transmission' -t $J -S"
+				/usr/bin/transmission-remote -n 'transmission:transmission' -t $J -S 2>&1
 			done
 		else
 			echo "No job to stop"
