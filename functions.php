@@ -103,6 +103,8 @@
 		$host = $_ENV["server"]["host"];
                 $fcmd = "";
 
+		$cmdid = time();
+
                 if($host == "localhost" || $host == "127.0.0.1")
                         $fcmd = $cmd;
                 else {
@@ -110,9 +112,9 @@
                         $cmd = str_replace("\"", "\\\"", $cmd);
                         $fcmd = "ssh $user@$host \"".$cmd."\" $extraparams";
                 }
-                exec("echo 'COMMAND = $fcmd' >> tmps/cmds.log");
+                exec("echo 'COMMAND $cmdid = $fcmd' >> tmps/cmds.log");
                 $out = exec($fcmd);
-                exec("echo 'OUT = $out' >> tmps/cmds.log");
+                exec("echo 'OUT $cmdid = $out' >> tmps/cmds.log");
                 return $out;
 	}
 

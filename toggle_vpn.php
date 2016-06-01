@@ -30,7 +30,7 @@
 
 		case "pptp":
 			$dev = "ppp0";
-			$val = executeCommand("ifconfig ppp0 | wc -l");
+			$val = executeCommand("/sbin/ifconfig ppp0 | wc -l");
 			if($val == "0")	 { //VPN is deactivated
 				echo executeCommand("sudo pon unifiedvpn.com 2>&1");
 				$enable = true;
