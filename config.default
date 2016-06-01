@@ -8,6 +8,7 @@ server.host=localhost
 # ssh key must be installed in remote server
 # The following is unused if server.host = localhost or 127.0.0.1
 server.ssh.user=bgr
+server.ssh.path=/home/bgr/mediaplayer
 
 # Web config
 # The following is unused if server.host = localhost or 127.0.0.1

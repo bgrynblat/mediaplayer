@@ -4,7 +4,11 @@
 
 	$file = $_GET["file"];
 	$to = $_GET["dest"];
+	$path = $_ENV["server"]["ssh"]["path"]."/".$file;
 
-	executeCommand("sudo cp mediaplayer/$file $to & ; disown");
+	$cmd = "sudo cp $path $to";
+	echo $cmd;
+
+	executeCommand("sudo cp \"$path\" \"$to\""," > /dev/null 2>/dev/null &");
 
 ?>

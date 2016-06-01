@@ -98,21 +98,22 @@
 		exec($req);
 	}
 
-	function executeCommand($cmd) {
-		$host = $_ENV["server"]["host"];
-		$fcmd = "";
+	function executeCommand($cmd, $extraparams = "") {
 
-		if($host == "localhost" || $host == "127.0.0.1")
-			$fcmd = $cmd;
-		else {
-			$user = $_ENV["server"]["ssh"]["user"];
-			$cmd = str_replace("\"", "\\\"", $cmd);
-			$fcmd = "ssh $user@$host \"".$cmd."\"";
-		}
-		exec("echo $fcmd >> tmps/cmds.log");
-		$out = exec($fcmd." 2>&1");
-		exec("echo 'OUT = $out' >> tmps/cmds.log");
-		return $out;
+		$host = $_ENV["server"]["host"];
+                $fcmd = "";
+
+                if($host == "localhost" || $host == "127.0.0.1")
+                        $fcmd = $cmd;
+                else {
+                        $user = $_ENV["server"]["ssh"]["user"];
+                        $cmd = str_replace("\"", "\\\"", $cmd);
+                        $fcmd = "ssh $user@$host \"".$cmd."\" $extraparams";
+                }
+                exec("echo 'COMMAND = $fcmd' >> tmps/cmds.log");
+                $out = exec($fcmd);
+                exec("echo 'OUT = $out' >> tmps/cmds.log");
+                return $out;
 	}
 
 	function getFiles() {

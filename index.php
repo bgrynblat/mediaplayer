@@ -17,8 +17,8 @@
 <div class="header">HELLO BEN !</div>
 
 <div class="section" id="files">
-	<h2>FILES <a href="#" onclick="updateFiles()"><i class='fa fa-refresh'></i></a></h2>
-	<div class='content'><i class='fa fa-refresh load'></i></div>
+	<h2>FILES <a href="#" onclick="updateFiles()"><i id="updfiles" class='fa fa-refresh'></i></a></h2>
+	<div class='content'><i class='fa fa-refresh big load'></i></div>
 </div>
 
 <div class="section" id="jobs">
@@ -27,12 +27,12 @@
 		<a onclick="actionAll('stop')"><i class='fa fa-pause'></i></a>
 		<a onclick="actionAll('start')"><i class='fa fa-play'></i></a>
 	</h2>
-	<div class='content'><i class='fa fa-refresh load'></i></div>
+	<div class='content'><i class='fa fa-refresh big load'></i></div>
 </div>
 
 <div class="section" id="status">
 	<h2>STATUS</h2>
-	<div class='content'><i class='fa fa-refresh load'></i></div>
+	<div class='content'><i class='fa fa-refresh big load'></i></div>
 	<form id="storages" action="add_storage.php" method="get">
 		<select id="storage_list" name="mount"></select>	
 		<input type="submit" value="Add"></input>

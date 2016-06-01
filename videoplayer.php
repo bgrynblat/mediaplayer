@@ -7,6 +7,9 @@
 	$video = $_GET['file'];
 	$url = "";
 
+	$tmp = split("/", $video);
+	$name = $tmp[count($tmp)-1];
+
         if($_ENV["server"]["host"] != "localhost" && $_ENV["server"]["host"] != "127.0.0.1") {
                 executeCommand("sudo ip route add $ip via 192.168.1.1 dev eth0");
                 $url = getUrl($video);

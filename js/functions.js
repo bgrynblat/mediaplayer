@@ -8,6 +8,8 @@ function start() {
 }
 
 function updateFiles() {
+	var i = $('#updfiles');
+	i.toggleClass("load");
 	$.get("update_files.php?force=true", function(data) {
 		var content = $("#files")[0].children[1];
 
@@ -15,8 +17,11 @@ function updateFiles() {
 
 		if(data.files.length == 0) content.innerHTML = "No files found !";
 
+		var id=0;
 		data.files.forEach(function(file) {
-			content.innerHTML += "<div class='file' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+file["filename"]+"<a class='delete' onclick='deleteFile(\""+file["url"]+"\");'><i class='fa fa-remove'></i></a>"+
+			id++;
+			content.innerHTML += "<div class='file' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+file["filename"]+" ("+file["size"]+")"+
+						"<a id='deletebtn"+id+"' class='delete' onclick='deleteFile(\""+file["url"]+"\", "+id+");'><i class='fa fa-remove'></i></a>"+
 						"<a class='play' href='videoplayer.php?file="+file["url"]+"'><i class='fa fa-play'></i></a>"+
 						"<a class='download' download='' target='_blank' href='download.php?file="+file["url"]+"&amp;mode=1'><i class='fa fa-cloud-download'></i></a>"+
 						"</div>";
@@ -26,6 +31,7 @@ function updateFiles() {
 		console.log("error...");
 	}).done(function() {
 		setTimeout(updateStatus, 60000, true);
+		i.toggleClass("load");
 	});
 }
 
@@ -104,7 +110,11 @@ function actionAll(action) {
 	});
 }
 
-function deleteFile(file) {
+function deleteFile(file, id) {
+
+	var f = $('#deletebtn'+id)[0];
+
+	f.innerHTML="<i class='fa fa-refresh load'></i>";
 	$.get("delete_file.php?file="+file, function(data) {
                 updateFiles();
 		updateStatus();
