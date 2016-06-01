@@ -7,6 +7,24 @@ function start() {
 	updateStatus();
 }
 
+function prettyFilename(fn) {
+	if(/.*S[0-9][0-9]E[0-9][0-9].*/.test(fn)) {
+		var t = fn.match(/S[0-9][0-9]E[0-9][0-9]/g);
+		var split = fn.split(t[0]);
+		var show = split[0].replace(/\./g, " ")+" "+t[0];	
+		return show;
+	} else {
+		var tmp = fn.replace(/\./g, " ");
+		var split = tmp.split(" ");
+		var nfn = "";
+		split.forEach(function(word) {
+			if(word != split[split.length-1])
+				nfn+=word+" ";
+		});
+		return nfn;
+	}
+}
+
 function updateFiles() {
 	var i = $('#updfiles');
 	i.toggleClass("load");
@@ -20,7 +38,10 @@ function updateFiles() {
 		var id=0;
 		data.files.forEach(function(file) {
 			id++;
-			content.innerHTML += "<div class='file fileid"+id+"' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+file["filename"]+" ("+file["size"]+")"+
+
+			var prettyfilename = prettyFilename(file["filename"]);
+
+			content.innerHTML += "<div class='file fileid"+id+"' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+prettyfilename+" ("+file["size"]+")"+
 						"<a id='deletebtn"+id+"' class='delete' onclick='deleteFile(\""+file["url"]+"\", "+id+");'><i class='fa fa-remove'></i></a>"+
 						"<a class='play' href='videoplayer.php?file="+file["url"]+"'><i class='fa fa-play'></i></a>"+
 						"<a class='download' download='' target='_blank' href='download.php?file="+file["url"]+"&amp;mode=1'><i class='fa fa-cloud-download'></i></a>"+

@@ -34,11 +34,13 @@
     <script src="http://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
     <script src="js/video.dev.js"></script>
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/functions.js"></script>
     <script src="js/videojs.chromecast.js"></script>
 
   </head>
   <body class="player">
-	<div class="header"><?php echo $name;?></div>
+	<div id="header" class="header"><?php echo $name;?></div>
 
     <video id="demo_player" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="480" data-setup="{}">
       	<?php
@@ -49,13 +51,17 @@
     </video>
 
     <script>
+	var h = $("#header")[0];
+	var pretty = prettyFilename(h.innerHTML);
+	h.innerHTML = pretty;
+
     document.addEventListener("DOMContentLoaded", function() {
       videojs("demo_player", {
         plugins: {
           chromecast: {
             appId: undefined,
             metadata: {
-              title: "<?php echo $name;?>",
+              title: pretty,
               //subtitle: "Subtitle"
             }
           }
