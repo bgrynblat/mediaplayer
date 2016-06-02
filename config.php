@@ -28,7 +28,6 @@
 
 	$_ENV["VPN"]["present"] = getConfValue("VPN.present");
 	$_ENV["VPN"]["type"] = getConfValue("VPN.type");	#Can be : pptp / openvpn
-	$_ENV["VPN"]["force"] = getConfValue("VPN.force");
 
 	//storage management
 	$file = "tmps/storages.cfg";

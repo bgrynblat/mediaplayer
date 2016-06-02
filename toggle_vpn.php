@@ -3,13 +3,12 @@
 	include('functions.php');
 
 	if(isset($_GET["force"])) {
-		$val = ($_ENV["VPN"]["force"] ? "false" : "true");
-		echo exec('sudo sed -i \'s/.*"VPN".*"force".*/\\t$_ENV["VPN"]["force"] = '.$val.';/\' config.php 2>&1');
-		sleep(2);
-		if($val == "true") {
-			exec("sudo scripts/force_vpn.sh > ".$_ENV["TMP_FOLDER"]."/force_vpn.log &");
+		$ret = executeCommand("ls tmps/forcevpn.yes ; echo $?");
+
+		if($ret == "0") {
+			executeCommand("sudo rm tmps/forcevpn.yes ; sudo pkill -9 force_vpn.sh");
 		} else {
-			exec("sudo pkill -9 force_vpn.sh");
+			executeCommand("sudo touch tmps/forcevpn.yes ; sudo scripts/force_vpn.sh > ".$_ENV["TMP_FOLDER"]."/force_vpn.log &");
 		}
 	} else {
 	$dev = "";

@@ -110,7 +110,7 @@
                 else {
                         $user = $_ENV["server"]["ssh"]["user"];
                         $cmd = str_replace("\"", "\\\"", $cmd);
-                        $fcmd = "ssh $user@$host \"".$cmd."\" $extraparams";
+                        $fcmd = "ssh $user@$host \"cd ".$_ENV["server"]["ssh"]["path"]." ; ".$cmd."\" $extraparams";
                 }
                 exec("echo 'COMMAND $cmdid = $fcmd' >> tmps/cmds.log");
                 $out = exec($fcmd);

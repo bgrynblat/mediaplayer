@@ -29,8 +29,11 @@
 	$val = checkVPNStatus();
 	$out = $out.($val ? "true" : "false");
 
-	$out = $out.', "present": "'.$_ENV["VPN"]["present"].'"';
-	$out = $out.', "force": "'.$_ENV["VPN"]["force"].'"';
+	$f = executeCommand("ls tmps/forcevpn.yes | wc -l");
+	$force = ($f == "0" ? "false" : "true");
+
+	$out = $out.', "present": '.$_ENV["VPN"]["present"];
+	$out = $out.', "force": '.$force;
 	$out = $out.', "type": "'.$_ENV["VPN"]["type"].'"}}';
 
 	header('Content-Type: application/json');
