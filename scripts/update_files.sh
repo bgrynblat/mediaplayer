@@ -5,7 +5,7 @@ TMP=tmps/files.tmp
 
 BASE_FOLDER=medias
 
-ls -RhlL $BASE_FOLDER > $TMP
+ls -RhlL $BASE_FOLDER | grep -v ".part" > $TMP
 
 
 CURRENT=""

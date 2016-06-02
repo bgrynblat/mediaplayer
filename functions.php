@@ -137,14 +137,13 @@
 		//PREFIX="tmps"
 		$tr = getTransmissionRemoteCmd("-l");
 
-		$cmd = "$tr | tr \"\n\" \"|\" | sed -e's/  /;/g' | sed -e 's/;;*/;/g' |  sed -e's/; */;/g' | sed -e's/|;*/|/g'";
+		$cmd = "$tr | tail -n +2 | head -n -1 | tr \"\n\" \"|\" | sed -e's/  /;/g' | sed -e 's/;;*/;/g' |  sed -e's/; */;/g' | sed -e's/|;*/|/g'";
 		$out = exec($cmd);
 
 		$array = explode("|", $out);
-
-		array_pop($array);
 		array_pop($array);
 
+	
 		return $array;
 	}
 

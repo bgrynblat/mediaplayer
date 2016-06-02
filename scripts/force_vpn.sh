@@ -15,9 +15,9 @@ if [ $FORCE == "true" ] ; then
 	VPN=`ifconfig ppp0 | wc -l`
 	# VPN deactivated
 	if [ $VPN == "0" ] ; then 
-		/usr/bin/transmission-remote -n 'transmission:transmission' -l | tail -n +2 | head -n -1 > tmps/jobs.tmp
-		let NB_JOBS=`cat tmps/jobs.tmp | wc -l`
-		JOBS=`cat tmps/jobs.tmp | grep -v " Stopped   " | awk '{print $1}'`
+		/usr/bin/transmission-remote -n 'transmission:transmission' -l | tail -n +2 | head -n -1 > tmps/stopjobs.tmp
+		let NB_JOBS=`cat tmps/stopjobs.tmp | wc -l`
+		JOBS=`cat tmps/stopjobs.tmp | grep -v " Stopped   " | awk '{print $1}'`
 
 		if [ $NB_JOBS -gt 0 ] ; then
 			#echo "$NB_JOBS jobs, stopping transmission"
