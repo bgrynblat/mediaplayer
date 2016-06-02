@@ -25,6 +25,11 @@ function prettyFilename(fn) {
 	}
 }
 
+function getFormat(fn) {
+	var spl = fn.split(".");
+	return spl[spl.length-1].toUpperCase();
+}
+
 function updateFiles() {
 	var i = $('#updfiles');
 	i.toggleClass("load");
@@ -41,10 +46,11 @@ function updateFiles() {
 
 			var prettyfilename = prettyFilename(file["filename"]);
 
-			content.innerHTML += "<div class='file fileid"+id+"' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+prettyfilename+" ("+file["size"]+")"+
+			content.innerHTML += "<div class='file fileid"+id+"' onclick='toggleDetails(\""+id+"\")' ondragstart='dragEvent(event)' id='"+file["url"]+"' draggable='true'>"+prettyfilename+
 						"<a id='deletebtn"+id+"' class='delete' onclick='deleteFile(\""+file["url"]+"\", "+id+");'><i class='fa fa-remove'></i></a>"+
 						"<a class='play' href='videoplayer.php?file="+file["url"]+"'><i class='fa fa-play'></i></a>"+
 						"<a class='download' download='' target='_blank' href='download.php?file="+file["url"]+"&amp;mode=1'><i class='fa fa-cloud-download'></i></a>"+
+						"<div class='filedetail hidden' id='filedetail"+id+"'>Size : "+file["size"]+" Format : "+getFormat(file["url"])+"</div>"+
 						"</div>";
 		});
 
@@ -54,6 +60,11 @@ function updateFiles() {
 		setTimeout(updateStatus, 60000, true);
 		i.toggleClass("load");
 	});
+}
+
+function toggleDetails(id) {
+	var i = $('#filedetail'+id);
+	i.toggleClass("hidden");
 }
 
 function dragEvent(ev) {

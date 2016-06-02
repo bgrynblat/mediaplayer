@@ -4,6 +4,14 @@ body {
 	margin: 0;
 }
 
+.load {
+	animation: spin 2s infinite linear;
+}
+
+.hidden {
+	display: none;
+}
+
 .header {
 	text-align: center;
 	background-color: #2B825E;
@@ -38,9 +46,6 @@ body {
 	padding: 10px;
 }
 
-.load {
-	animation: spin 2s infinite linear;
-}
 
 .section .contect i.big {
 	margin-left: 50%;
@@ -93,6 +98,10 @@ a.play {
         color: #6CA7BA;
         float: right;
         margin-left: 25px;
+}
+
+.file .filedetail {
+	font-size: 10px;
 }
 
 /* Current job */
